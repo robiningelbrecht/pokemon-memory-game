@@ -1,0 +1,84 @@
+body {
+  background-color: rgb(24 23 31);
+  font-family: Poppins, sans-serif;
+  min-height: 100vh;
+  color: #fff;
+}
+
+body.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body .loader {
+  display: none;
+}
+
+body.loading .loader {
+  display: block;
+}
+
+body > div.cards {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  color: rgb(255 254 255);
+}
+
+flippable-card {
+  width: 200px;
+  margin: 1em;
+}
+
+flippable-card [slot] {
+  padding: 1em;
+  background: linear-gradient(#37363c, rgb(42 41 48));
+  border-radius: 0.3em;
+}
+
+flippable-card [slot="front"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: rgb(24 23 31);
+  background: radial-gradient(circle at 50% -35%, #BBBBBB 50%, #fff 36%);
+}
+
+flippable-card [slot="front"] img {
+  height: 150px;
+  margin-bottom: 0.5em;
+}
+
+flippable-card.black [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #111111 50%, #fff 36%);
+}
+flippable-card.blue [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #2196F3 50%, #fff 36%);
+}
+flippable-card.brown [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #A1887F 50%, #fff 36%);
+}
+flippable-card.grey [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #BBBBBB 50%, #fff 36%);
+}
+flippable-card.green [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #4CAF50 50%, #fff 36%);
+}
+flippable-card.pink [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #E91E63 50%, #fff 36%);
+}
+flippable-card.purple [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #9C27B0 50%, #fff 36%);
+}
+flippable-card.red [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #F44336 50%, #fff 36%);
+}
+flippable-card.yellow [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #FFC107 50%, #fff 36%);
+}
+
+flippable-card [slot="back"] {
+  min-height: 100%;
+}
