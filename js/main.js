@@ -17,3 +17,5 @@ game.render();
 // Data has been loaded and cached.
 // Game has been rendered.
 body.classList.remove("loading");
+
+// @TODO: keep track of moves.

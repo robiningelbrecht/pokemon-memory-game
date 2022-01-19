@@ -22,13 +22,15 @@ body.loading .loader {
 body > div.cards {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-evenly;
   min-height: 100vh;
   color: rgb(255 254 255);
 }
 
 flippable-card {
   width: 200px;
-  margin: 1em;
+  height: 200px;
+  margin: 0.5em;
 }
 
 flippable-card [slot] {
@@ -48,7 +50,7 @@ flippable-card [slot="front"] {
 }
 
 flippable-card [slot="front"] img {
-  height: 150px;
+  height: 130px;
   margin-bottom: 0.5em;
 }
 
@@ -81,5 +83,13 @@ flippable-card.yellow [slot="front"] {
 }
 
 flippable-card [slot="back"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 100%;
+  padding: 0;
+}
+
+flippable-card [slot="back"] img {
+  width: 175px;
 }

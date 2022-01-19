@@ -25,11 +25,19 @@ export default class Game {
           cardElement.classList.add(pokemon.getColor());
           //cardElement.setAttribute('flipped', '');
 
-          cardElement.innerHTML = '<div slot="front"><img src="'+ pokemon.getSprite() +'" /><p>' + pokemon.getName() +'</p></div><div slot="back"></div>';
+          cardElement.innerHTML = '<div slot="front"><img src="'+ pokemon.getSprite() +'" /><p>#'+ pokemon.getId() + ' ' + pokemon.getName() +'</p></div><div slot="back"><img src="assets/pokeball.png" /></div>';
 
           this.renderRoot.append(cardElement.cloneNode(true));
           this.renderRoot.append(cardElement.cloneNode(true));
       });
+  }
+
+  updateFlippedCards(){
+
+  }
+
+  updateFoundPairs(){
+
   }
 
   async retrieveAndCacheData() {
