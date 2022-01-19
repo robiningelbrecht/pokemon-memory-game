@@ -23,6 +23,7 @@ export default class Game {
           const cardElement = document.createElement('flippable-card');
           cardElement.dataset.pokemonId = pokemonId;
           cardElement.classList.add(pokemon.getColor());
+          //cardElement.setAttribute('flipped', '');
 
           cardElement.innerHTML = '<div slot="front"><img src="'+ pokemon.getSprite() +'" /><p>' + pokemon.getName() +'</p></div><div slot="back"></div>';
 

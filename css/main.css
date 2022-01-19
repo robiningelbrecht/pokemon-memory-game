@@ -42,6 +42,7 @@ flippable-card [slot="front"] {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  font-weight: bold;
   color: rgb(24 23 31);
   background: radial-gradient(circle at 50% -35%, #BBBBBB 50%, #fff 36%);
 }
