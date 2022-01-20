@@ -22,7 +22,7 @@ body.loading .loader {
 body > div.cards {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   min-height: 100vh;
   color: rgb(255 254 255);
 }
@@ -46,7 +46,6 @@ flippable-card [slot="front"] {
   flex-direction: column;
   font-weight: bold;
   color: rgb(24 23 31);
-  background: radial-gradient(circle at 50% -35%, #BBBBBB 50%, #fff 36%);
 }
 
 flippable-card [slot="front"] img {
@@ -54,33 +53,64 @@ flippable-card [slot="front"] img {
   margin-bottom: 0.5em;
 }
 
-flippable-card.black [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #111111 50%, #fff 36%);
-}
-flippable-card.blue [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #2196F3 50%, #fff 36%);
-}
-flippable-card.brown [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #A1887F 50%, #fff 36%);
-}
-flippable-card.grey [slot="front"] {
+flippable-card.type [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #BBBBBB 50%, #fff 36%);
 }
-flippable-card.green [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #4CAF50 50%, #fff 36%);
+flippable-card.type.type--bug [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #94BC4A 50%, #fff 36%);
 }
-flippable-card.pink [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #E91E63 50%, #fff 36%);
+flippable-card.type.type--dark [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #736C75 50%, #fff 36%);
 }
-flippable-card.purple [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #9C27B0 50%, #fff 36%);
+flippable-card.type.type--dragon [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #6A7BAF 50%, #fff 36%);
 }
-flippable-card.red [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #F44336 50%, #fff 36%);
+flippable-card.type.type--electric [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #E5C531 50%, #fff 36%);
 }
-flippable-card.yellow [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #FFC107 50%, #fff 36%);
+flippable-card.type.type--fairy [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #E397D1 50%, #fff 36%);
 }
+flippable-card.type.type--fighting [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #CB5F48 50%, #fff 36%);
+}
+flippable-card.type.type--fire [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #EA7A3C 50%, #fff 36%);
+}
+flippable-card.type.type--flying [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #7DA6DE 50%, #fff 36%);
+}
+flippable-card.type.type--ghost [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #846AB6 50%, #fff 36%);
+}
+flippable-card.type.type--grass [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #71C558 50%, #fff 36%);
+}
+flippable-card.type.type--ground [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #CC9F4F 50%, #fff 36%);
+}
+flippable-card.type.type--ice [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #70CBD4 50%, #fff 36%);
+}
+flippable-card.type.type--normal [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #AAB09F 50%, #fff 36%);
+}
+flippable-card.type.type--poison [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #B468B7 50%, #fff 36%);
+}
+flippable-card.type.type--psychic [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #E5709B 50%, #fff 36%);
+}
+flippable-card.type.type--rock [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #B2A061 50%, #fff 36%);
+}
+flippable-card.type.type--steel [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #89A1B0 50%, #fff 36%);
+}
+flippable-card.type.type--water [slot="front"] {
+  background: radial-gradient(circle at 50% -35%, #539AE2 50%, #fff 36%);
+}
+
 
 flippable-card [slot="back"] {
   display: flex;

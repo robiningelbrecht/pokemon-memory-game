@@ -2,8 +2,7 @@ export default class Pokemon {
   constructor(
     id,
     name,
-    color,
-    base_experience,
+    baseExperience,
     height,
     weight,
     abilities,
@@ -14,8 +13,7 @@ export default class Pokemon {
   ) {
     this._id = id;
     this._name = name;
-    this._color = color;
-    this._baseExperience = base_experience;
+    this._baseExperience = baseExperience;
     this._height = height;
     this._weight = weight;
     this._abilities = abilities;
@@ -31,10 +29,6 @@ export default class Pokemon {
 
   getName() {
     return this._name;
-  }
-
-  getColor() {
-    return this._color;
   }
 
   getBaseExperience() {
@@ -69,31 +63,30 @@ export default class Pokemon {
     return this._sprite;
   }
 
-  static createFromApi(api_pokemon, api_species) {
+  static createFromApi(apiPokemon) {
     return new Pokemon(
-      api_pokemon.id,
-      api_pokemon.name,
-      api_species.color.name,
-      api_pokemon.base_experience,
-      api_pokemon.height,
-      api_pokemon.weight,
-      api_pokemon.abilities.map((ability) => {
+      apiPokemon.id,
+      apiPokemon.name,
+      apiPokemon.base_experience,
+      apiPokemon.height,
+      apiPokemon.weight,
+      apiPokemon.abilities.map((ability) => {
         return ability.ability.name;
       }),
-      api_pokemon.moves.map((move) => {
+      apiPokemon.moves.map((move) => {
         return move.move.name;
       }),
-      api_pokemon.types.map((type) => {
+      apiPokemon.types.map((type) => {
         return type.type.name;
       }),
-      api_pokemon.stats.map((stat) => {
+      apiPokemon.stats.map((stat) => {
         return {
           name: stat.stat.name,
           base_stat: stat.base_stat,
         };
       }),
-      api_pokemon.sprites.other.dream_world.front_default ||
-        api_pokemon.sprites.other["official-artwork"].front_default
+      apiPokemon.sprites.other.dream_world.front_default ||
+      apiPokemon.sprites.other["official-artwork"].front_default
     );
   }
 
@@ -101,7 +94,6 @@ export default class Pokemon {
     return new Pokemon(
       data._id,
       data._name,
-      data._color,
       data._baseExperience,
       data._height,
       data._weight,
