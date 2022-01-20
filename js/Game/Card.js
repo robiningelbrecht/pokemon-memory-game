@@ -17,7 +17,7 @@ export default class Card {
       '" /><p>#' +
       this.id +
       " " +
-      this.name +
+      this.name.charAt(0).toUpperCase() + this.name.slice(1) +
       '</p></div><div slot="back"><img src="assets/pokeball.png" /></div>';
 
     return cardElement;
