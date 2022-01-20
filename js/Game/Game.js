@@ -1,3 +1,4 @@
+import Card from "./Card.js";
 import Pokemon from "./Pokemon.js";
 
 export default class Game {
@@ -7,6 +8,8 @@ export default class Game {
     this.numberOfPairs = numberOfPairs;
     this.renderRoot = renderRoot;
     this.currentFlippedCards = [];
+    this.allCards = [];
+    this.cardsAreLocked = false;
   }
 
   async render() {
@@ -24,42 +27,78 @@ export default class Game {
     [...randomPokemonIds].forEach((pokemonId) => {
       const pokemon = this.cache.getPokemon(pokemonId);
 
-      const cardElement = document.createElement("flippable-card");
-      cardElement.classList.add(...["type", "type--" + pokemon.getTypes()[0]]);
-      //cardElement.setAttribute('flipped', '');
-
-      cardElement.innerHTML =
-        '<div slot="front"><img src="' +
-        pokemon.getSprite() +
-        '" /><p>#' +
-        pokemon.getId() +
-        " " +
-        pokemon.getName() +
-        '</p></div><div slot="back"><img src="assets/pokeball.png" /></div>';
+      const cardElement = Card.createFromPokemon(pokemon).getElement();
 
       const cardElementOne = cardElement.cloneNode(true);
       const cardElementTwo = cardElement.cloneNode(true);
       this.renderRoot.append(cardElementOne);
       this.renderRoot.append(cardElementTwo);
+      // Keep track of all the cards to easily lock and release them.
+      this.allCards.push(cardElementOne);
+      this.allCards.push(cardElementTwo);
 
       cardElementOne.addEventListener("click", (event) => {
-        this._cardWasFlipped(event.target);
+        this._cardWasClicked(event.target);
       });
       cardElementTwo.addEventListener("click", (event) => {
-        this._cardWasFlipped(event.target);
+        this._cardWasClicked(event.target);
       });
     });
 
     this._hideLoader();
   }
 
-  _cardWasFlipped(cardElement) {
-    this.currentFlippedCards.push(cardElement.closest('flippable-card'));
+  async _cardWasClicked(cardElement) {
+    if(this.cardsAreLocked){
+      return;
+    }
+    
+    this._lockAllCards();
+    this.currentFlippedCards.push(cardElement.closest("flippable-card"));
 
     if (this.currentFlippedCards.length == 2) {
       const [a, b] = this.currentFlippedCards;
-      a.isEqualNode(b);
+      this.currentFlippedCards = [];
+
+      if (a.isEqualNode(b)) {
+        this._cardsWerePaired(a, b);
+        this._releaseAllCards();
+        return;
+      }
+
+      await this._cardsWereNotPaired(a, b);
     }
+
+    this._releaseAllCards();
+  }
+
+  _cardsWerePaired(...cardElements) {
+    cardElements.forEach((cardElement) => {
+      cardElement.setAttribute("paired", "");
+      cardElement.setAttribute("disabled", "");
+    });
+  }
+
+  async _cardsWereNotPaired(...cardElements) {
+    await this._sleep(3);
+
+    cardElements.forEach((cardElement) => {
+      cardElement.setAttribute("flipped", "");
+    });
+  }
+
+  _lockAllCards() {
+    this.cardsAreLocked = true;
+    this.allCards.forEach((cardElement) => {
+      cardElement.setAttribute("disabled", "");
+    });
+  }
+
+  _releaseAllCards() {
+    this.cardsAreLocked = false;
+    this.allCards
+      .filter((cardElement) => !cardElement.hasAttribute("paired"))
+      .forEach((cardElement) => cardElement.removeAttribute("disabled", ""));
   }
 
   _showLoader() {
@@ -81,5 +120,9 @@ export default class Game {
       const pokemon = Pokemon.createFromApi(apiPokemon);
       this.cache.addPokemon(id, pokemon);
     }
+  }
+
+  _sleep(seconds) {
+    return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
   }
 }

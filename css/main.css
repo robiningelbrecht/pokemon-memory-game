@@ -32,6 +32,9 @@ body > div.cards {
 flippable-card {
   width: 200px;
 }
+flippable-card[disabled] [slot] {
+ cursor: initial;
+}
 
 flippable-card [slot] {
   padding: 1em;
