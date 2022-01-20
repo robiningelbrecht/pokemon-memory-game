@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(24 23 31);
+  background-color: #eee;
   font-family: Poppins, sans-serif;
   min-height: 100vh;
   color: #fff;
@@ -23,19 +23,18 @@ body > div.cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 1em;
+  margin: 1em 0;
   min-height: 100vh;
   color: rgb(255 254 255);
 }
 
 flippable-card {
   width: 200px;
-  height: 200px;
-  margin: 0.5em;
 }
 
 flippable-card [slot] {
   padding: 1em;
-  background: linear-gradient(#37363c, rgb(42 41 48));
   border-radius: 0.3em;
 }
 
@@ -55,60 +54,79 @@ flippable-card [slot="front"] img {
 
 flippable-card.type [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #BBBBBB 50%, #fff 36%);
+  border: 3px solid #BBBBBB;
 }
 flippable-card.type.type--bug [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #94BC4A 50%, #fff 36%);
+  border: 3px solid #94BC4A;
 }
 flippable-card.type.type--dark [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #736C75 50%, #fff 36%);
+  border: 3px solid #736C75;
 }
 flippable-card.type.type--dragon [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #6A7BAF 50%, #fff 36%);
+  border: 3px solid #6A7BAF;
 }
 flippable-card.type.type--electric [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #E5C531 50%, #fff 36%);
+  border: 3px solid #E5C531;
 }
 flippable-card.type.type--fairy [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #E397D1 50%, #fff 36%);
+  border: 3px solid #E397D1;
 }
 flippable-card.type.type--fighting [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #CB5F48 50%, #fff 36%);
+  border: 3px solid #CB5F48;
 }
 flippable-card.type.type--fire [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #EA7A3C 50%, #fff 36%);
+  border: 3px solid #EA7A3C;
 }
 flippable-card.type.type--flying [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #7DA6DE 50%, #fff 36%);
+  border: 3px solid #7DA6DE;
 }
 flippable-card.type.type--ghost [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #846AB6 50%, #fff 36%);
+  border: 3px solid #846AB6;
 }
 flippable-card.type.type--grass [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #71C558 50%, #fff 36%);
+  border: 3px solid #71C558;
 }
 flippable-card.type.type--ground [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #CC9F4F 50%, #fff 36%);
+  border: 3px solid #CC9F4F;
 }
 flippable-card.type.type--ice [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #70CBD4 50%, #fff 36%);
+  border: 3px solid #70CBD4;
 }
 flippable-card.type.type--normal [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #AAB09F 50%, #fff 36%);
+  border: 3px solid #AAB09F;
 }
 flippable-card.type.type--poison [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #B468B7 50%, #fff 36%);
+  border: 3px solid #B468B7;
 }
 flippable-card.type.type--psychic [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #E5709B 50%, #fff 36%);
+  border: 3px solid #E5709B;
 }
 flippable-card.type.type--rock [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #B2A061 50%, #fff 36%);
+  border: 3px solid #B2A061;
 }
 flippable-card.type.type--steel [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #89A1B0 50%, #fff 36%);
+  border: 3px solid #89A1B0;
 }
 flippable-card.type.type--water [slot="front"] {
   background: radial-gradient(circle at 50% -35%, #539AE2 50%, #fff 36%);
+  border: 3px solid #539AE2;
 }
 
 
@@ -116,10 +134,12 @@ flippable-card [slot="back"] {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 3px solid black;
+  background: #fff;
   min-height: 100%;
   padding: 0;
 }
 
 flippable-card [slot="back"] img {
-  width: 175px;
+  width: 80px;
 }

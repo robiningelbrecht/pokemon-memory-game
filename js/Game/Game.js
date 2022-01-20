@@ -6,9 +6,13 @@ export default class Game {
     this.cache = cache;
     this.numberOfPairs = numberOfPairs;
     this.renderRoot = renderRoot;
+    this.currentFlippedCards = [];
   }
 
-  render() {
+  async render() {
+    this._showLoader();
+    await this._retrieveAndCacheData();
+
     const min = 1;
     const max = 151;
 
@@ -33,16 +37,40 @@ export default class Game {
         pokemon.getName() +
         '</p></div><div slot="back"><img src="assets/pokeball.png" /></div>';
 
-      this.renderRoot.append(cardElement.cloneNode(true));
-      this.renderRoot.append(cardElement.cloneNode(true));
+      const cardElementOne = cardElement.cloneNode(true);
+      const cardElementTwo = cardElement.cloneNode(true);
+      this.renderRoot.append(cardElementOne);
+      this.renderRoot.append(cardElementTwo);
+
+      cardElementOne.addEventListener("click", (event) => {
+        this._cardWasFlipped(event.target);
+      });
+      cardElementTwo.addEventListener("click", (event) => {
+        this._cardWasFlipped(event.target);
+      });
     });
+
+    this._hideLoader();
   }
 
-  updateFlippedCards() {}
+  _cardWasFlipped(cardElement) {
+    this.currentFlippedCards.push(cardElement.closest('flippable-card'));
 
-  updateFoundPairs() {}
+    if (this.currentFlippedCards.length == 2) {
+      const [a, b] = this.currentFlippedCards;
+      a.isEqualNode(b);
+    }
+  }
 
-  async retrieveAndCacheData() {
+  _showLoader() {
+    document.querySelector("body").classList.add("loading");
+  }
+
+  _hideLoader() {
+    document.querySelector("body").classList.remove("loading");
+  }
+
+  async _retrieveAndCacheData() {
     if (this.cache.isWarmedUp()) {
       return;
     }
