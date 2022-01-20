@@ -49,10 +49,10 @@ export default class Game {
   }
 
   async _cardWasClicked(cardElement) {
-    if(this.cardsAreLocked){
+    if (this.cardsAreLocked) {
       return;
     }
-    
+
     this._lockAllCards();
     this.currentFlippedCards.push(cardElement.closest("flippable-card"));
 
