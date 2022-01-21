@@ -31,11 +31,9 @@ export default class Game {
 
       const cardElementOne = cardElement.cloneNode(true);
       const cardElementTwo = cardElement.cloneNode(true);
-      this.renderRoot.append(cardElementOne);
-      this.renderRoot.append(cardElementTwo);
+      this.renderRoot.append(cardElementOne, cardElementTwo);
       // Keep track of all the cards to easily lock and release them.
-      this.allCards.push(cardElementOne);
-      this.allCards.push(cardElementTwo);
+      this.allCards.push(cardElementOne, cardElementTwo);
 
       cardElementOne.addEventListener("click", (event) => {
         this._cardWasClicked(event.target);
@@ -60,7 +58,7 @@ export default class Game {
 
     cardElement = cardElement.closest("flippable-card");
     if (cardElement.hasAttribute("paired")) {
-      // A paired card wal clicked, release cards and early return.
+      // A paired card was clicked, release cards and early return.
       this._releaseAllCards();
       return;
     }
