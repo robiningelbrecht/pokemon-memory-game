@@ -1,4 +1,4 @@
-import Pokemon from "./Pokemon.js";
+import Pokemon from "../Pokemon.js";
 
 const CACHE_KEY = 'pokemons';
 export default class Cache {

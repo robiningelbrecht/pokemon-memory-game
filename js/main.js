@@ -3,7 +3,7 @@ import Settings from "./Game/Settings.js";
 
 const game = new Game(
   new Settings(10),
-  document.querySelector("div.cards")
+  document.querySelector("body")
 );
 game.start();
 

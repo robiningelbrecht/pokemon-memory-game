@@ -1,6 +1,6 @@
+import Cache from "../Infrastructure/Cache.js";
 import Card from "./../Card.js";
 import Game from "./../Game.js";
-import Cache from "./../Cache.js";
 
 export default class CardsScreen {
   constructor(settings) {
@@ -14,6 +14,8 @@ export default class CardsScreen {
     const min = 1;
     const max = 151;
 
+    parentElement.classList.add(...["screen--cards"]);
+
     const randomPokemonIds = new Set();
     while (randomPokemonIds.size !== this.settings.getNumberOfPairs()) {
       randomPokemonIds.add(Math.floor(Math.random() * (max - min + 1)) + min);
@@ -26,17 +28,17 @@ export default class CardsScreen {
 
       const cardElementOne = cardElement.cloneNode(true);
       const cardElementTwo = cardElement.cloneNode(true);
-      
+
       // Keep track of all the cards to easily lock and release them.
       this.allCards.push(cardElementOne, cardElementTwo);
 
       // @TODO: Show the cards at first, then flip them over and shuffle them.
       parentElement.append(cardElementOne, cardElementTwo);
+    });
 
-      cardElementOne.addEventListener("click", (event) => {
-        this._cardWasClicked(event.target);
-      });
-      cardElementTwo.addEventListener("click", (event) => {
+    // Bind clip event to all cards.
+    document.querySelectorAll("flippable-card").forEach((element) => {
+      element.addEventListener("click", (event) => {
         this._cardWasClicked(event.target);
       });
     });

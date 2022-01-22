@@ -8,11 +8,19 @@ export default class PokeApi {
     return await response.json();
   }
 
+  async getGenerations() {
+    return await this.request('/generation?limit=' + limit);
+  }
+
+  async getGeneration(identifier) {
+    return await this.request('/generation/' + identifier);
+  }
+
   async getPokemon(identifier) {
     return await this.request('/pokemon/' + identifier);
   }
 
-  async getList(limit) {
+  async gePokemonList(limit) {
     return await this.request('/pokemon?limit=' + limit);
   }
 

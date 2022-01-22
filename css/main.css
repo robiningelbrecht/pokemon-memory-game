@@ -2,24 +2,28 @@ body {
   background-color: #eee;
   font-family: Poppins, sans-serif;
   min-height: 100vh;
-  color: #fff;
+  color: #222;
 }
 
-body.loading {
+.game{
+  min-height: 100vh;
+}
+
+.game.loading {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-body .loader {
+.game .loader {
   display: none;
 }
 
-body.loading .loader {
+.game.loading .loader {
   display: block;
 }
 
-body > div.cards {
+.game > .screen.screen--cards {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
