@@ -1,14 +1,11 @@
 import Game from "./Game/Game.js";
-import PokeApi from "./Game/PokeApi.js";
-import Cache from "./Game/Cache.js";
+import Settings from "./Game/Settings.js";
 
 const game = new Game(
-  new PokeApi(),
-  new Cache(),
-  30,
+  new Settings(10),
   document.querySelector("div.cards")
 );
-game.render();
+game.start();
 
 // @TODO: keep track of moves.
 // @TODO: Add possibility to change game settings (# pairs, gen 1, 2, 3,...)
