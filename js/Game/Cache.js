@@ -1,13 +1,9 @@
 import Pokemon from "./Pokemon.js";
 
+const CACHE_KEY = 'pokemons';
 export default class Cache {
-  constructor() {
-    this.CACHE_KEY = "pokemons";
-    this.localStorage = window.localStorage;
-  }
-
-  getPokemon(id) {
-    let cache = this.__get();
+  static getPokemon(id) {
+    const cache = Cache.__get();
 
     if (cache.hasOwnProperty(id)) {
       return Pokemon.createFromCache(cache[id]);
@@ -16,21 +12,21 @@ export default class Cache {
     return null;
   }
 
-  addPokemon(id, data) {
-    let cache = this.__get();
+  static addPokemon(id, data) {
+    const cache = Cache.__get();
     cache[id] = data;
-    this.localStorage.setItem(this.CACHE_KEY, JSON.stringify(cache));
+    window.localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
   }
 
-  isWarmedUp() {
-    return window.localStorage.getItem(this.CACHE_KEY);
+  static isWarmedUp() {
+    return window.localStorage.getItem(CACHE_KEY);
   }
 
-  clear() {
-    this.localStorage.clear();
+  static clear() {
+    window.localStorage.clear();
   }
 
-  __get() {
-    return JSON.parse(window.localStorage.getItem(this.CACHE_KEY)) || {};
+  static __get() {
+    return JSON.parse(window.localStorage.getItem(CACHE_KEY)) || {};
   }
 }

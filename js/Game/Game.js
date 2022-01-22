@@ -4,11 +4,10 @@ import PokeApi from "./PokeApi.js";
 import CardsScreen from "./Screen/CardsScreen.js";
 
 export default class Game {
-  constructor(settings, renderRoot) {
+  constructor(settings, rootElement) {
     this.settings = settings;
-    this.cache = new Cache();
     this.pokeApi = new PokeApi(); 
-    this.renderRoot = renderRoot;
+    this.rootElement = rootElement;
   }
 
   async start() {
@@ -17,11 +16,9 @@ export default class Game {
     await this._retrieveAndCacheData();
 
     const cardsScreen = new CardsScreen(this.settings);
-    
-    this._hideLoader();
-    this.renderRoot.append(...cardsScreen.getElements());
+    cardsScreen.load(this.rootElement);
 
-    // @TODO: Show the cards at first, then flip them over and shuffle them.
+    this._hideLoader();
   }
 
   _showLoader() {
@@ -33,7 +30,7 @@ export default class Game {
   }
 
   async _retrieveAndCacheData() {
-    if (this.cache.isWarmedUp()) {
+    if (Cache.isWarmedUp()) {
       return;
     }
 
@@ -41,7 +38,7 @@ export default class Game {
       const apiPokemon = await this.pokeApi.getPokemon(id);
 
       const pokemon = Pokemon.createFromApi(apiPokemon);
-      this.cache.addPokemon(id, pokemon);
+      Cache.addPokemon(id, pokemon);
     }
   }
 

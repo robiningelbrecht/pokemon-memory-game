@@ -5,13 +5,12 @@ import Cache from "./../Cache.js";
 export default class CardsScreen {
   constructor(settings) {
     this.settings = settings;
-    this.cache = new Cache();
     this.currentFlippedCards = [];
     this.allCards = [];
     this.cardsAreLocked = false;
   }
 
-  getElements() {
+  load(parentElement) {
     const min = 1;
     const max = 151;
 
@@ -21,7 +20,7 @@ export default class CardsScreen {
     }
 
     [...randomPokemonIds].forEach((pokemonId) => {
-      const pokemon = this.cache.getPokemon(pokemonId);
+      const pokemon = Cache.getPokemon(pokemonId);
 
       const cardElement = Card.createFromPokemon(pokemon).getElement();
 
@@ -31,6 +30,9 @@ export default class CardsScreen {
       // Keep track of all the cards to easily lock and release them.
       this.allCards.push(cardElementOne, cardElementTwo);
 
+      // @TODO: Show the cards at first, then flip them over and shuffle them.
+      parentElement.append(cardElementOne, cardElementTwo);
+
       cardElementOne.addEventListener("click", (event) => {
         this._cardWasClicked(event.target);
       });
@@ -38,8 +40,6 @@ export default class CardsScreen {
         this._cardWasClicked(event.target);
       });
     });
-
-    return this.allCards;
   }
 
   async _cardWasClicked(cardElement) {
