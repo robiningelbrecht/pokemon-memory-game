@@ -12,7 +12,7 @@ export default class Generation {
   }
 
   getMainRegion() {
-    return this._mainRegion;
+    return this._mainRegion.charAt(0).toUpperCase() + this._mainRegion.slice(1);
   }
 
   getPokemonIndexes() {

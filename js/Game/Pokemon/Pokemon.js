@@ -28,7 +28,7 @@ export default class Pokemon {
   }
 
   getName() {
-    return this._name;
+    return this._name.charAt(0).toUpperCase() + this._name.slice(1);
   }
 
   getBaseExperience() {
