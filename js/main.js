@@ -7,5 +7,4 @@ const game = new Game(
 );
 game.start();
 
-// @TODO: keep track of moves.
-// @TODO: Add possibility to change game settings (# pairs, gen 1, 2, 3,...)
+// @TODO: keep track of moves and time.
