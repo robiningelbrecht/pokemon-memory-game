@@ -22,7 +22,7 @@ export default class Game {
     this._initialize();
     await this._retrieveAndCacheData();
   
-    EventDispatcher.dispatch(new Event("gameDataWasLoaded"));
+    EventDispatcher.dispatch(new Event("gameWasInitialized"));
 
     this._hideLoader();
   }
@@ -30,13 +30,22 @@ export default class Game {
   _bindEventListeners() {
     const body = document.querySelector("body");
 
-    body.addEventListener("gameDataWasLoaded", () => {
-      this._gameDataWasLoaded();
+    body.addEventListener("gameWasInitialized", () => {
+      this._gameWasInitialized();
+    });
+    body.addEventListener("gameWasConfigured", () => {
+      // @TODO: load pokemon and show card screen.
+    });
+    body.addEventListener("gameWasCompleted", () => {
+      // @TODO: show score screen.
+    });
+    body.addEventListener("gameWasRestarted", () => {
+      // @TODO: show configure screen again to allow to re-play.
     });
   }
 
-  _gameDataWasLoaded() {
-    // Game data has been loaded from API, load configure screen.
+  _gameWasInitialized() {
+    // Game was initialized, load configure screen.
     const screenElement = document.querySelector(".game .screen");
     const configureScreen = new ConfigureScreen(this.settings);
     configureScreen.load(screenElement);
