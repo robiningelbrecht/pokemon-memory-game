@@ -1,6 +1,6 @@
 export default class PokeApi {
   constructor() {
-    this.base = 'https://pokeapi.co/api/v2';
+    this.base = "https://pokeapi.co/api/v2";
   }
 
   async request(path) {
@@ -9,23 +9,23 @@ export default class PokeApi {
   }
 
   async getGenerations() {
-    return await this.request('/generation?limit=' + limit);
+    const response = await this.request("/generation");
+    return response.results;
   }
 
   async getGeneration(identifier) {
-    return await this.request('/generation/' + identifier);
+    return await this.request("/generation/" + identifier);
   }
 
   async getPokemon(identifier) {
-    return await this.request('/pokemon/' + identifier);
+    return await this.request("/pokemon/" + identifier);
   }
 
   async gePokemonList(limit) {
-    return await this.request('/pokemon?limit=' + limit);
+    return await this.request("/pokemon?limit=" + limit);
   }
 
   async getSpecies(identifier) {
-    return await this.request('/pokemon-species/' + identifier);
+    return await this.request("/pokemon-species/" + identifier);
   }
-
 }

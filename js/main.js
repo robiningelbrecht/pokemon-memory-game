@@ -2,7 +2,7 @@ import Game from "./Game/Game.js";
 import Settings from "./Game/Settings.js";
 
 const game = new Game(
-  new Settings(10),
+  Settings.default(),
   document.querySelector("body")
 );
 game.start();

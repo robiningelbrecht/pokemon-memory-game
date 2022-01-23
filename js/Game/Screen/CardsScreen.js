@@ -1,3 +1,5 @@
+import ArrayTransform from "../Infrastructure/Array/ArrayTransform.js";
+import ArrayFactory from "../Infrastructure/Array/ArrayFactory.js";
 import Cache from "../Infrastructure/Cache.js";
 import Card from "./../Card.js";
 import Game from "./../Game.js";
@@ -16,14 +18,14 @@ export default class CardsScreen {
 
     parentElement.classList.add(...["screen--cards"]);
 
-    const randomPokemonIds = new Set();
-    while (randomPokemonIds.size !== this.settings.getNumberOfPairs()) {
-      randomPokemonIds.add(Math.floor(Math.random() * (max - min + 1)) + min);
-    }
+    const randomPokemonIds = ArrayFactory.createWithRandomIntegers(
+      this.settings.getNumberOfPairs(),
+      min,
+      max
+    );
 
     [...randomPokemonIds].forEach((pokemonId) => {
       const pokemon = Cache.getPokemon(pokemonId);
-
       const cardElement = Card.createFromPokemon(pokemon).getElement();
 
       const cardElementOne = cardElement.cloneNode(true);
@@ -31,12 +33,12 @@ export default class CardsScreen {
 
       // Keep track of all the cards to easily lock and release them.
       this.allCards.push(cardElementOne, cardElementTwo);
-
-      // @TODO: Show the cards at first, then flip them over and shuffle them.
-      parentElement.append(cardElementOne, cardElementTwo);
     });
 
-    // Bind clip event to all cards.
+    // Shuffle cards and add them to the screen.
+    parentElement.append(...ArrayTransform.shuffle(this.allCards));
+
+    // Bind click event to all cards.
     document.querySelectorAll("flippable-card").forEach((element) => {
       element.addEventListener("click", (event) => {
         this._cardWasClicked(event.target);
