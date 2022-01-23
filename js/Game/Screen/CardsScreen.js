@@ -13,18 +13,11 @@ export default class CardsScreen {
   }
 
   load(parentElement) {
-    const min = 1;
-    const max = 151;
+    const pokemonIndexes = this.settings.getGeneration().getPokemonIndexes();
+    ArrayTransform.shuffle(pokemonIndexes);
+    const randomPokemonIds = pokemonIndexes.slice(0, this.settings.getNumberOfPairs());
 
-    parentElement.classList.add(...["screen--cards"]);
-
-    const randomPokemonIds = ArrayFactory.createWithRandomIntegers(
-      this.settings.getNumberOfPairs(),
-      min,
-      max
-    );
-
-    [...randomPokemonIds].forEach((pokemonId) => {
+    randomPokemonIds.forEach((pokemonId) => {
       const pokemon = Cache.getPokemon(pokemonId);
       const cardElement = Card.createFromPokemon(pokemon).getElement();
 

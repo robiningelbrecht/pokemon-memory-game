@@ -11,7 +11,6 @@ export default class Game {
     this.settings = settings;
     this.rootElement = rootElement;
     this.wrapperElement = document.createElement("div");
-    this.pokeApi = new PokeApi();
 
     this._bindEventListeners();
   }
@@ -20,8 +19,8 @@ export default class Game {
     this._showLoader();
 
     this._initialize();
-    await this._retrieveAndCacheData();
-  
+    await Game.retrieveAndCacheData(this.settings.getGeneration());
+
     EventDispatcher.dispatch(new Event("gameWasInitialized"));
 
     this._hideLoader();
@@ -31,34 +30,44 @@ export default class Game {
     const body = document.querySelector("body");
 
     body.addEventListener("gameWasInitialized", () => {
-      this._gameWasInitialized();
+      // Game was initialized, load configure screen.
+      this._loadScreen(new ConfigureScreen(this.settings));
     });
-    body.addEventListener("gameWasConfigured", () => {
-      // @TODO: load pokemon and show card screen.
+    body.addEventListener("gameWasConfigured", async () => {
+      this._showLoader();
+      // @TODO: Add chosen generation in the custom event.
+      const generation = Cache.getGeneration(2);
+
+      await Game.retrieveAndCacheData(generation);
+      this.settings.setGeneration(generation);
+
+      this._loadScreen(new CardsScreen(this.settings));
+      this._hideLoader();
     });
     body.addEventListener("gameWasCompleted", () => {
       // @TODO: show score screen.
     });
     body.addEventListener("gameWasRestarted", () => {
-      // @TODO: show configure screen again to allow to re-play.
+      // @TODO: show configure screen again to allow to.
     });
   }
 
-  _gameWasInitialized() {
-    // Game was initialized, load configure screen.
+  _loadScreen(screen) {
     const screenElement = document.querySelector(".game .screen");
-    const configureScreen = new ConfigureScreen(this.settings);
-    configureScreen.load(screenElement);
+    screenElement.innerHTML = '';
+    this._removeClasseswithPrefix(screenElement, "screen--");
+    this._removeClasseswithPrefix(this.wrapperElement, "screen--");
 
-    //const cardsScreen = new CardsScreen(this.settings);
-    //cardsScreen.load(screenElement);
+    this.wrapperElement.classList.add(...["screen--" + screen.constructor.name]);
+    screenElement.classList.add(...["screen--" + screen.constructor.name]);
+    screen.load(screenElement);
   }
 
   _initialize() {
     this.wrapperElement.classList.add(...["game"]);
 
     const loaderElement = document.createElement("div");
-    loaderElement.innerText = "Loading";
+    loaderElement.innerText = "Loading Pokémon assets...";
     loaderElement.classList.add(...["loader"]);
 
     const screenElement = document.createElement("div");
@@ -76,23 +85,31 @@ export default class Game {
     this.wrapperElement.classList.remove("loading");
   }
 
-  async _retrieveAndCacheData() {
+  _removeClasseswithPrefix(element, prefix) {
+    const regx = new RegExp("\\b" + prefix + "[^ ]*[ ]?\\b", "g");
+    element.className = element.className.replace(regx, "");
+    return element;
+  }
+
+  static async retrieveAndCacheData(generation) {
     if (!Cache.isWarmedUpForGenerations()) {
       // Warm cache with generations.
-      const generations = await this.pokeApi.getGenerations();
+      const generations = await PokeApi.getGenerations();
       for (const generation of generations) {
-        const apiGeneration = await this.pokeApi.getGeneration(generation.name);
+        const apiGeneration = await PokeApi.getGeneration(generation.name);
         const gen = Generation.createFromApi(apiGeneration);
         Cache.addGeneration(gen.getId(), gen);
       }
     }
 
-    if (!Cache.isWarmedUpForPokemonInGeneration(this.settings.getGeneration())) {
+    if (
+      !Cache.isWarmedUpForPokemonInGeneration(generation)
+    ) {
       // Warm cache with pokemon for the current selected generation.
-      const pokemonIndexes = this.settings.getGeneration().getPokemonIndexes();
+      const pokemonIndexes = generation.getPokemonIndexes();
 
       for (let i = 0; i < pokemonIndexes.length; i++) {
-        const apiPokemon = await this.pokeApi.getPokemon(pokemonIndexes[i]);
+        const apiPokemon = await PokeApi.getPokemon(pokemonIndexes[i]);
         const pokemon = Pokemon.createFromApi(apiPokemon);
         Cache.addPokemon(pokemon.getId(), pokemon);
       }

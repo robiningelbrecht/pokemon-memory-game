@@ -3,6 +3,20 @@ body {
   font-family: Poppins, sans-serif;
   min-height: 100vh;
   color: #222;
+  background-image: url(../assets/bg-low-res.jpg);
+  background-size: cover;
+  transition: background-image 0.5s ease-in-out;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -10;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .game {
@@ -17,6 +31,12 @@ body {
 
 .game .loader {
   display: none;
+  padding: 1em;
+  gap: 1em;
+  width: 400px;
+  background-color: #fff;
+  border-radius: 0.3em;
+  text-align: center;
 }
 
 .game.loading .loader {
@@ -24,10 +44,42 @@ body {
 }
 
 .game.loading .screen {
-  display: none;
+  display: none !important;
 }
 
-.game > .screen.screen--cards {
+.game.screen--ConfigureScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game > .screen.screen--ConfigureScreen {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  gap: 1em;
+  width: 400px;
+  background-color: #fff;
+  border-radius: 0.3em;
+}
+
+.game > .screen.screen--ConfigureScreen button {
+  text-align: center;
+  padding: 10px;
+  background-color: lightgray;
+  text-shadow: -1px -1px black, 1px 1px white;
+  color: gray;
+  border-radius: 7px;
+  box-shadow: 0 0.2em gray;
+}
+
+.game > .screen.screen--ConfigureScreen button:active {
+  box-shadow: none;
+  position: relative;
+  top: 0.2em;
+}
+
+.game > .screen.screen--CardsScreen {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -56,6 +108,12 @@ flippable-card [slot="front"] {
   flex-direction: column;
   font-weight: bold;
   color: rgb(24 23 31);
+}
+
+flippable-card [slot="front"] p{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 flippable-card [slot="front"] img {

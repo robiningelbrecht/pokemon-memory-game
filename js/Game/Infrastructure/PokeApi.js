@@ -1,31 +1,28 @@
+const BASE_URI = "https://pokeapi.co/api/v2";
 export default class PokeApi {
-  constructor() {
-    this.base = "https://pokeapi.co/api/v2";
-  }
-
-  async request(path) {
-    let response = await fetch(this.base + path);
+  static async request(path) {
+    let response = await fetch(BASE_URI + path);
     return await response.json();
   }
 
-  async getGenerations() {
+  static async getGenerations() {
     const response = await this.request("/generation");
     return response.results;
   }
 
-  async getGeneration(identifier) {
+  static async getGeneration(identifier) {
     return await this.request("/generation/" + identifier);
   }
 
-  async getPokemon(identifier) {
+  static async getPokemon(identifier) {
     return await this.request("/pokemon/" + identifier);
   }
 
-  async gePokemonList(limit) {
+  static async gePokemonList(limit) {
     return await this.request("/pokemon?limit=" + limit);
   }
 
-  async getSpecies(identifier) {
+  static async getSpecies(identifier) {
     return await this.request("/pokemon-species/" + identifier);
   }
 }

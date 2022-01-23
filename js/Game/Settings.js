@@ -14,7 +14,14 @@ export default class Settings {
     return this.generation;
   }
 
-  static default(){
-    return new Settings(new Generation(1, "Kanto", ArrayFactory.createIntegerRange(1, 151)), 10);
+  setGeneration(generation) {
+    this.generation = generation;
+  }
+
+  static default() {
+    return new Settings(
+      new Generation(1, "Kanto", ArrayFactory.createIntegerRange(1, 151)),
+      10
+    );
   }
 }

@@ -1,4 +1,6 @@
 import Cache from "../Infrastructure/Cache.js";
+import EventDispatcher from "../Infrastructure/EventDispatcher.js";
+import Game from "../Game.js";
 
 export default class ConfigureScreen {
   constructor(settings) {
@@ -6,8 +8,6 @@ export default class ConfigureScreen {
   }
 
   load(parentElement) {
-    parentElement.classList.add(...["screen--configure"]);
-
     const generations = Cache.getGenerations();
     const generationsSelectEl = document.createElement('select');
 
@@ -18,6 +18,13 @@ export default class ConfigureScreen {
       generationsSelectEl.appendChild(option);
     });
 
-    parentElement.append(generationsSelectEl);
+    const buttonElement = document.createElement('button');
+    buttonElement.innerText = 'Start game';
+
+    parentElement.append(generationsSelectEl, buttonElement);
+
+    buttonElement.addEventListener("click", () => {
+      EventDispatcher.dispatch(new Event("gameWasConfigured"));
+    });
   }
 }
