@@ -1,6 +1,5 @@
 import Cache from "../Infrastructure/Cache.js";
 import EventDispatcher from "../Infrastructure/EventDispatcher.js";
-import Game from "../Game.js";
 
 export default class ConfigureScreen {
   constructor(settings) {
@@ -9,22 +8,36 @@ export default class ConfigureScreen {
 
   load(parentElement) {
     const generations = Cache.getGenerations();
-    const generationsSelectEl = document.createElement('select');
+    const generationsSelectEl = document.createElement("select");
 
-    generations.forEach(generation => {
+    generations.forEach((generation) => {
       const option = document.createElement("option");
       option.value = generation.getId();
       option.text = generation.getMainRegion();
       generationsSelectEl.appendChild(option);
     });
 
-    const buttonElement = document.createElement('button');
-    buttonElement.innerText = 'Start game';
+    const numberofPairsElement = document.createElement('input');
+    numberofPairsElement.setAttribute("type", "number");
+    numberofPairsElement.setAttribute("min", "1");
+    numberofPairsElement.setAttribute("max", "10");
+    numberofPairsElement.setAttribute("step", "1");
+    numberofPairsElement.setAttribute("value", this.settings.getNumberOfPairs());
 
-    parentElement.append(generationsSelectEl, buttonElement);
+    const buttonElement = document.createElement("button");
+    buttonElement.innerText = "Start game";
+
+    parentElement.append(numberofPairsElement, generationsSelectEl, buttonElement);
 
     buttonElement.addEventListener("click", () => {
-      EventDispatcher.dispatch(new Event("gameWasConfigured"));
+      EventDispatcher.dispatch(
+        new CustomEvent("gameWasConfigured", {
+          detail: {
+            generation: Cache.getGeneration(generationsSelectEl.value),
+            numberOfPairs: numberofPairsElement.value
+          },
+        })
+      );
     });
   }
 }

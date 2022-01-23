@@ -5,6 +5,7 @@ import EventDispatcher from "./Infrastructure/EventDispatcher.js";
 import Generation from "./Pokemon/Generation.js";
 import PokeApi from "./Infrastructure/PokeApi.js";
 import Pokemon from "./Pokemon/Pokemon.js";
+import Settings from "./Settings.js";
 
 export default class Game {
   constructor(settings, rootElement) {
@@ -33,13 +34,14 @@ export default class Game {
       // Game was initialized, load configure screen.
       this._loadScreen(new ConfigureScreen(this.settings));
     });
-    body.addEventListener("gameWasConfigured", async () => {
+    body.addEventListener("gameWasConfigured", async (event) => {
+      // Game was configured. Cache pissible new data and load screen.
       this._showLoader();
-      // @TODO: Add chosen generation in the custom event.
-      const generation = Cache.getGeneration(2);
+      const generation = event.detail.generation;
 
       await Game.retrieveAndCacheData(generation);
-      this.settings.setGeneration(generation);
+      // Override settings with newly configured ones.
+      this.settings = new Settings(generation, event.detail.numberOfPairs);
 
       this._loadScreen(new CardsScreen(this.settings));
       this._hideLoader();

@@ -1,7 +1,7 @@
 import ArrayTransform from "../Infrastructure/Array/ArrayTransform.js";
-import ArrayFactory from "../Infrastructure/Array/ArrayFactory.js";
 import Cache from "../Infrastructure/Cache.js";
 import Card from "./../Card.js";
+import EventDispatcher from "../Infrastructure/EventDispatcher.js";
 import Game from "./../Game.js";
 
 export default class CardsScreen {
@@ -15,7 +15,10 @@ export default class CardsScreen {
   load(parentElement) {
     const pokemonIndexes = this.settings.getGeneration().getPokemonIndexes();
     ArrayTransform.shuffle(pokemonIndexes);
-    const randomPokemonIds = pokemonIndexes.slice(0, this.settings.getNumberOfPairs());
+    const randomPokemonIds = pokemonIndexes.slice(
+      0,
+      this.settings.getNumberOfPairs()
+    );
 
     randomPokemonIds.forEach((pokemonId) => {
       const pokemon = Cache.getPokemon(pokemonId);
@@ -76,9 +79,11 @@ export default class CardsScreen {
 
       if (a.isEqualNode(b)) {
         this._cardsWerePaired(a, b);
-        // @TODO: Check if this was the last pair,
-        // If so, the game is finished.
         this._releaseAllCards();
+
+        if (this._allCardsWerePaired()) {
+          EventDispatcher.dispatch(new Event("gameWasCompleted"));
+        }
         return;
       }
 
@@ -115,5 +120,12 @@ export default class CardsScreen {
     this.allCards
       .filter((cardElement) => !cardElement.hasAttribute("paired"))
       .forEach((cardElement) => cardElement.removeAttribute("disabled", ""));
+  }
+
+  _allCardsWerePaired() {
+    return (
+      this.allCards.filter((cardElement) => !cardElement.hasAttribute("paired"))
+        .length === 0
+    );
   }
 }
