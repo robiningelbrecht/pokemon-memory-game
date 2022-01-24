@@ -57,12 +57,6 @@ export default class Game {
         )
       );
     });
-    body.addEventListener("gameShouldBeRestarted", () => {
-      // @TODO: show cards screen again.
-    });
-    body.addEventListener("gameShouldBeReconfigured", () => {
-      // @TODO: show configure screen again.
-    });
   }
 
   _loadScreen(screen) {
