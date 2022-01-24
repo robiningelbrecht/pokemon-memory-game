@@ -7,27 +7,22 @@ export default class ConfigureScreen {
   }
 
   load(parentElement) {
-    const generations = Cache.getGenerations();
-    const generationsSelectEl = document.createElement("select");
+    const numberOfPairsLabel = this._buildLabelElement('Enter the number of pairs you want to play with (1 - 10)');
+    const numberofPairsElement = this._buildNumberOfPairsElement();
 
-    generations.forEach((generation) => {
-      const option = document.createElement("option");
-      option.value = generation.getId();
-      option.text = generation.getMainRegion();
-      generationsSelectEl.appendChild(option);
-    });
-
-    const numberofPairsElement = document.createElement('input');
-    numberofPairsElement.setAttribute("type", "number");
-    numberofPairsElement.setAttribute("min", "1");
-    numberofPairsElement.setAttribute("max", "10");
-    numberofPairsElement.setAttribute("step", "1");
-    numberofPairsElement.setAttribute("value", this.settings.getNumberOfPairs());
+    const generationsLabel = this._buildLabelElement('Select the region you want to play in');
+    const generationsSelectEl = this._buildGenerationsElement();
 
     const buttonElement = document.createElement("button");
     buttonElement.innerText = "Start game";
 
-    parentElement.append(numberofPairsElement, generationsSelectEl, buttonElement);
+    parentElement.append(
+      numberOfPairsLabel, 
+      numberofPairsElement, 
+      generationsLabel,
+      generationsSelectEl, 
+      buttonElement
+      );
 
     buttonElement.addEventListener("click", () => {
       EventDispatcher.dispatch(
@@ -39,5 +34,38 @@ export default class ConfigureScreen {
         })
       );
     });
+  }
+
+  _buildNumberOfPairsElement(){
+    const numberofPairsElement = document.createElement('input');
+    numberofPairsElement.setAttribute("type", "number");
+    numberofPairsElement.setAttribute("min", "1");
+    numberofPairsElement.setAttribute("max", "10");
+    numberofPairsElement.setAttribute("step", "1");
+    numberofPairsElement.setAttribute("value", this.settings.getNumberOfPairs());
+
+    return numberofPairsElement;
+  }
+
+  _buildGenerationsElement(){
+    const generations = Cache.getGenerations();
+
+    const generationsSelectEl = document.createElement("select");
+
+    generations.forEach((generation) => {
+      const option = document.createElement("option");
+      option.value = generation.getId();
+      option.text = generation.getMainRegion();
+      generationsSelectEl.appendChild(option);
+    });
+
+    return generationsSelectEl;
+  }
+
+  _buildLabelElement(text){
+    const label = document.createElement('label');
+    label.innerText = text;
+
+    return label;
   }
 }

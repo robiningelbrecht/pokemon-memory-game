@@ -6,6 +6,7 @@ import Generation from "./Pokemon/Generation.js";
 import PokeApi from "./Infrastructure/PokeApi.js";
 import Pokemon from "./Pokemon/Pokemon.js";
 import Settings from "./Settings.js";
+import ScoreScreen from "./Screen/ScoreScreen.js";
 
 export default class Game {
   constructor(settings, rootElement) {
@@ -46,21 +47,33 @@ export default class Game {
       this._loadScreen(new CardsScreen(this.settings));
       this._hideLoader();
     });
-    body.addEventListener("gameWasCompleted", () => {
-      // @TODO: show score screen.
+    body.addEventListener("gameWasCompleted", (event) => {
+      // Show score screen.
+      this._loadScreen(
+        new ScoreScreen(
+          this.settings,
+          event.detail.numberOfMoves,
+          event.detail.timeToComplete
+        )
+      );
     });
-    body.addEventListener("gameWasRestarted", () => {
-      // @TODO: show configure screen again to allow to.
+    body.addEventListener("gameShouldBeRestarted", () => {
+      // @TODO: show cards screen again.
+    });
+    body.addEventListener("gameShouldBeReconfigured", () => {
+      // @TODO: show configure screen again.
     });
   }
 
   _loadScreen(screen) {
     const screenElement = document.querySelector(".game .screen");
-    screenElement.innerHTML = '';
+    screenElement.innerHTML = "";
     this._removeClasseswithPrefix(screenElement, "screen--");
     this._removeClasseswithPrefix(this.wrapperElement, "screen--");
 
-    this.wrapperElement.classList.add(...["screen--" + screen.constructor.name]);
+    this.wrapperElement.classList.add(
+      ...["screen--" + screen.constructor.name]
+    );
     screenElement.classList.add(...["screen--" + screen.constructor.name]);
     screen.load(screenElement);
   }
@@ -69,7 +82,7 @@ export default class Game {
     this.wrapperElement.classList.add(...["game"]);
 
     const loaderElement = document.createElement("div");
-    loaderElement.innerText = "Loading Pokémon assets...";
+    loaderElement.innerText = "Loading...";
     loaderElement.classList.add(...["loader"]);
 
     const screenElement = document.createElement("div");
@@ -104,9 +117,7 @@ export default class Game {
       }
     }
 
-    if (
-      !Cache.isWarmedUpForPokemonInGeneration(generation)
-    ) {
+    if (!Cache.isWarmedUpForPokemonInGeneration(generation)) {
       // Warm cache with pokemon for the current selected generation.
       const pokemonIndexes = generation.getPokemonIndexes();
 

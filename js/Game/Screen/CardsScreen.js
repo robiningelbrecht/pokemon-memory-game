@@ -10,6 +10,8 @@ export default class CardsScreen {
     this.currentFlippedCards = [];
     this.allCards = [];
     this.cardsAreLocked = false;
+    this.numberOfMoves = 0;
+    this.startedAt = Date.now();
   }
 
   load(parentElement) {
@@ -50,6 +52,8 @@ export default class CardsScreen {
     // Lock all cards to prevent abundance of clicking.
     this._lockAllCards();
 
+    this.numberOfMoves++;
+
     cardElement = cardElement.closest("flippable-card");
     if (cardElement.hasAttribute("paired")) {
       // A paired card was clicked, release cards and early return.
@@ -82,7 +86,16 @@ export default class CardsScreen {
         this._releaseAllCards();
 
         if (this._allCardsWerePaired()) {
-          EventDispatcher.dispatch(new Event("gameWasCompleted"));
+          setTimeout(() => {
+            EventDispatcher.dispatch(
+              new CustomEvent("gameWasCompleted", {
+                detail: {
+                  numberOfMoves: this.numberOfMoves,
+                  timeToComplete: Date.now() - this.startedAt,
+                },
+              })
+            );
+          }, 2000);
         }
         return;
       }
@@ -98,10 +111,16 @@ export default class CardsScreen {
       cardElement.setAttribute("paired", "");
       cardElement.setAttribute("disabled", "");
     });
+
+    setTimeout(() => {
+      cardElements.forEach((cardElement) => {
+        cardElement.setAttribute("paired-visually", "");
+      });
+    }, 1000);
   }
 
   async _cardsWereNotPaired(...cardElements) {
-    await Game._sleep(3);
+    await Game._sleep(1.5);
 
     cardElements.forEach((cardElement) => {
       cardElement.setAttribute("flipped", "");
