@@ -95,9 +95,6 @@ body::before {
 
 .game > .screen.screen--ConfigureScreen h2{
   text-align: center;
-  color: #FFCB02;
-  -webkit-text-stroke: 1px #3464ad;
-  font-family: 'Pokemon Solid', sans-Poppins, sans-serif;
 }
 
 .game > .screen.screen--ConfigureScreen label{
