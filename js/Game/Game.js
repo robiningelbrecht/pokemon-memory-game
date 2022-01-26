@@ -92,7 +92,7 @@ export default class Game {
     loaderElement.innerText = "Loading...";
 
     setTimeout(() => {
-      loaderElement.innerText = "Waw, this is embarrassing. Still wotking hard";
+      loaderElement.innerText = "Waw, this is embarrassing...";
     }, 5000);
   }
 
