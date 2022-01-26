@@ -33,7 +33,7 @@ export default class ConfigureScreen {
         new CustomEvent("gameWasConfigured", {
           detail: {
             generation: Cache.getGeneration(generationsSelectEl.value),
-            numberOfPairs: numberofPairsElement.value
+            numberOfPairs: numberofPairsElement.value ? numberofPairsElement.value : 10,
           },
         })
       );
@@ -47,6 +47,7 @@ export default class ConfigureScreen {
     numberofPairsElement.setAttribute("max", "10");
     numberofPairsElement.setAttribute("step", "1");
     numberofPairsElement.setAttribute("value", this.settings.getNumberOfPairs());
+    numberofPairsElement.setAttribute("required", "");
 
     return numberofPairsElement;
   }
