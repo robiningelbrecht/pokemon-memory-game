@@ -87,6 +87,19 @@ body::before {
   border-radius: 0.3em;
 }
 
+.game > .screen.screen--ConfigureScreen{
+  padding-top: 150px;
+  background: #fff url(../assets/pokemon-logo.svg) no-repeat;
+  background-position: 0 -75px;
+}
+
+.game > .screen.screen--ConfigureScreen h2{
+  text-align: center;
+  color: #FFCB02;
+  -webkit-text-stroke: 1px #3464ad;
+  font-family: 'Pokemon Solid', sans-Poppins, sans-serif;
+}
+
 .game > .screen.screen--ConfigureScreen label{
   font-weight: bold;
 }
@@ -108,19 +121,9 @@ body::before {
 flippable-card {
   width: 200px;
 }
-flippable-card[paired][paired-visually] img {
-  filter: grayscale(100%);
-  transition: all 0.5s ease;
-}
-flippable-card[paired][paired-visually].type [slot="front"] {
-  background: radial-gradient(circle at 50% -35%, #bbbbbb 50%, #fff 36%);
-  border: 3px solid #bbbbbb;
-  transition: all 0.5s ease;
-}
-flippable-card[paired][paired-visually].type [slot="front"]::before{
-  content: '';
-  width: 100%;
-  height: 100%;
+flippable-card[paired][paired-visually] {
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
 flippable-card[disabled] [slot] {
   cursor: initial;

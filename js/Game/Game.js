@@ -18,9 +18,9 @@ export default class Game {
   }
 
   async start() {
+    this._initialize();
     this._showLoader();
 
-    this._initialize();
     await Game.retrieveAndCacheData(this.settings.getGeneration());
 
     EventDispatcher.dispatch(new Event("gameWasInitialized"));
@@ -88,6 +88,12 @@ export default class Game {
 
   _showLoader() {
     this.wrapperElement.classList.add("loading");
+    const loaderElement = document.querySelector(".game .loader");
+    loaderElement.innerText = "Loading...";
+
+    setTimeout(() => {
+      loaderElement.innerText = "Waw, this is embarrassing. Still wotking hard";
+    }, 5000);
   }
 
   _hideLoader() {

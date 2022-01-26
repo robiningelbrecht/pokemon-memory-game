@@ -7,6 +7,9 @@ export default class ConfigureScreen {
   }
 
   load(parentElement) {
+    const titleElement = document.createElement('h2');
+    titleElement.innerText = 'Memory game';
+
     const numberOfPairsLabel = this._buildLabelElement('Enter the number of pairs you want to play with (1 - 10)');
     const numberofPairsElement = this._buildNumberOfPairsElement();
 
@@ -17,6 +20,7 @@ export default class ConfigureScreen {
     buttonElement.innerText = "Start game";
 
     parentElement.append(
+      titleElement,
       numberOfPairsLabel, 
       numberofPairsElement, 
       generationsLabel,
