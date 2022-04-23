@@ -6,5 +6,5 @@ __note__: All data is fetched from [https://pokeapi.co/](https://pokeapi.co/), l
 
 ![Preview](https://github.com/robiningelbrecht/pokemon-memory-game/raw/master/assets/preview.gif "Preview")
 
-Demo: [https://robiningelbrecht.github.io/projects/pokemon-memory-game/](https://robiningelbrecht.github.io/projects/pokemon-memory-game/)
+Demo: [https://pokemon-memory-game.robiningelbrecht.be/](https://pokemon-memory-game.robiningelbrecht.be/)
 
